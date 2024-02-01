@@ -1,7 +1,8 @@
 const express = require('express');
 const note = express.Router();
-const { readFromFile } = require('../helpers/fsUtils');
-
+const { readFromFile, writeToFile, readAndAppend } = require('../helpers/fsUtils');
+//uuid gen from uuid npm pkg
+const { v4: uuidv4 } = require('uuid');
 // GET Route for retrieving all the notes
 note.get('/', (req, res) => {
   readFromFile('./db/db.json')
@@ -22,7 +23,8 @@ note.post('/', (req, res) => {
     // Variable for the object will save
     const newNote = {
     title,
-    text
+    text,
+    id: uuidv4() ,
     };
 
     readAndAppend(newNote, './db/db.json');
